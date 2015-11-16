@@ -6,7 +6,7 @@ from collections import Counter
 
 
 #Loading the data extracted previously
-class Brain(object):
+class Brain2(object):
 	def loadCsv(self,filename):
 		lines = csv.reader(open(filename, "rb"))
 		dataset = list(lines)
@@ -74,24 +74,12 @@ class Brain(object):
 
 #Extracting moments of input test image
 
-	def testImg1(self,org_img):
-		img=cv2.cvtColor(org_img,cv2.COLOR_BGR2GRAY)
-		thresh=cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
-		Humom=cv2.HuMoments(cv2.moments(thresh)).flatten()
-		#print(Humom)
-		return Humom
-
 	def testImg2(self,org_img):
 		means = cv2.mean(org_img)
 		means = means[:3]
 		#print(means)
 		return means
 
-	def testImg3(self,org_img):
-		(means2, stds) = cv2.meanStdDev(org_img)
-		stats = np.concatenate([means2, stds]).flatten()
-		#print(stats)
-		return stats
 
 #To predict to which class the input image belongs to
 
@@ -108,27 +96,18 @@ class Brain(object):
 #main function being called
 
 	def detect(self,img):
-		filename1='HuMoments.csv'
+		#filename1='HuMoments.csv'
 		filename2='RGB.csv'
-		filename3='MeanStdDev.csv'
-		dataset1=self.loadCsv(filename1)
+		#filename3='MeanStdDev.csv'
+		#dataset1=self.loadCsv(filename1)
 		dataset2=self.loadCsv(filename2)
-		dataset3=self.loadCsv(filename3)
-		summary1=self.summarizeByClass(dataset1)
+		#dataset3=self.loadCsv(filename3)
+		#summary1=self.summarizeByClass(dataset1)
 		summary2=self.summarizeByClass(dataset2)
-		summary3=self.summarizeByClass(dataset3)
-		result = [10,10,10]
+		#summary3=self.summarizeByClass(dataset3)
+		#result = [10,10,10]
 		img = cv2.flip(img, 1)
-		inputvector1 = self.testImg1(img)
 		inputvector2 = self.testImg2(img)
-		inputvector3 = self.testImg3(img)
-		result[0] = self.predict(summary1 , inputvector1)
-		result[1] = self.predict(summary2 , inputvector2)
-		result[2] = self.predict(summary3 , inputvector3)
-		prediction = Counter(result)
-		print prediction.most_common(1)[0][0]
-		return prediction.most_common(1)[0][0]
-			
-			
-
-
+		prediction = self.predict(summary2 , inputvector2)
+		print prediction
+		return prediction

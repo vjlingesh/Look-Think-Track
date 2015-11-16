@@ -1,10 +1,12 @@
 from Bay import Brain
+from Bay_RGB import Brain2
 from Track import Eye
 import cv2
 import numpy as np
 
 think = Brain()
 see = Eye()
+think2 = Brain2()
 
 boxA = [[0 for i in range(2)] for j in range(2)]
 boxB = [[0 for i in range(2)] for j in range(2)]
@@ -19,10 +21,10 @@ box6 = [[0 for i in range(2)] for j in range(2)]
 cropimg = [0 for i in range(6)]
 index = [[0 for i in range(2)] for j in range(6)]
 
-cap=cv2.VideoCapture(0)
+cap=cv2.VideoCapture(1)
 
 while(True):
-	f,img=cap.read(0)
+	f,img=cap.read()
 	x=img.shape[1]
 	y=img.shape[0]
 	#A 
@@ -93,16 +95,24 @@ while(True):
 	cv2.rectangle(img,(boxA[0][0],boxA[0][1]),(boxA[1][0],boxA[1][1]),(0,0,255))			#A
 
 	cv2.imshow("Calibration",img)
+	if(cv2.waitKey(1) & 0xFF == ord('n')):
+		break
 
 	A = img[boxA[0][1]:boxA[1][1], boxA[0][0]:boxA[1][0]]
 	B = img[boxB[0][1]:boxB[1][1], boxB[0][0]:boxB[1][0]]
 	C = img[boxC[0][1]:boxC[1][1], boxC[0][0]:boxC[1][0]]
 	D = img[boxD[0][1]:boxD[1][1], boxD[0][0]:boxD[1][0]]
-	
-	resA = think.detect(A)
-	resB = think.detect(B)
-	resC = think.detect(C)
-	resD = think.detect(D)
+
+	'''
+	A = img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
+	B = img[box5[0][1]:box5[1][1], box5[0][0]:box5[1][0]]
+	C = img[box2[0][1]:box2[1][1], box2[0][0]:box2[1][0]]
+	D = img[box1[0][1]:box1[1][1], box1[0][0]:box1[1][0]]
+	'''
+	resA = think2.detect(A)
+	resB = think2.detect(B)
+	resC = think2.detect(C)
+	resD = think2.detect(D)
 
 	if(0 == resA):
 		if(0 == resB):
@@ -112,8 +122,8 @@ while(True):
 				cropimg[1]=img[box2[0][1]:box2[1][1], box2[0][0]:box2[1][0]]
 				cropimg[2]=img[box3[0][1]:box3[1][1], box3[0][0]:box3[1][0]]
 				cropimg[3]=img[box4[0][1]:box4[1][1], box4[0][0]:box4[1][0]]
-				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box1[1][0]]
-				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box1[1][0]]
+				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box5[1][0]]
+				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
 					index[i][1]=think.detect(cropimg[i])
@@ -130,8 +140,8 @@ while(True):
 				cropimg[1]=img[box2[0][1]:box2[1][1], box2[0][0]:box2[1][0]]
 				cropimg[2]=img[box3[0][1]:box3[1][1], box3[0][0]:box3[1][0]]
 				cropimg[3]=img[box4[0][1]:box4[1][1], box4[0][0]:box4[1][0]]
-				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box1[1][0]]
-				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box1[1][0]]
+				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box5[1][0]]
+				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
 					index[i][1]=think.detect(cropimg[i])
@@ -148,8 +158,8 @@ while(True):
 				cropimg[1]=img[box2[0][1]:box2[1][1], box2[0][0]:box2[1][0]]
 				cropimg[2]=img[box3[0][1]:box3[1][1], box3[0][0]:box3[1][0]]
 				cropimg[3]=img[box4[0][1]:box4[1][1], box4[0][0]:box4[1][0]]
-				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box1[1][0]]
-				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box1[1][0]]
+				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box5[1][0]]
+				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
 					index[i][1]=think.detect(cropimg[i])
@@ -166,8 +176,8 @@ while(True):
 				cropimg[1]=img[box2[0][1]:box2[1][1], box2[0][0]:box2[1][0]]
 				cropimg[2]=img[box3[0][1]:box3[1][1], box3[0][0]:box3[1][0]]
 				cropimg[3]=img[box4[0][1]:box4[1][1], box4[0][0]:box4[1][0]]
-				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box1[1][0]]
-				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box1[1][0]]
+				cropimg[4]=img[box5[0][1]:box5[1][1], box5[0][0]:box5[1][0]]
+				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
 					index[i][1]=think.detect(cropimg[i])

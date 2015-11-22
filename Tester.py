@@ -3,6 +3,7 @@ from Bay_RGB import Brain2
 from Track import Eye
 import cv2
 import numpy as np
+import time
 
 think = Brain()
 see = Eye()
@@ -97,7 +98,7 @@ while(True):
 	cv2.imshow("Calibration",img)
 	if(cv2.waitKey(1) & 0xFF == ord('n')):
 		break
-
+	'''
 	A = img[boxA[0][1]:boxA[1][1], boxA[0][0]:boxA[1][0]]
 	B = img[boxB[0][1]:boxB[1][1], boxB[0][0]:boxB[1][0]]
 	C = img[boxC[0][1]:boxC[1][1], boxC[0][0]:boxC[1][0]]
@@ -108,7 +109,7 @@ while(True):
 	B = img[box5[0][1]:box5[1][1], box5[0][0]:box5[1][0]]
 	C = img[box2[0][1]:box2[1][1], box2[0][0]:box2[1][0]]
 	D = img[box1[0][1]:box1[1][1], box1[0][0]:box1[1][0]]
-	'''
+	
 	resA = think2.detect(A)
 	resB = think2.detect(B)
 	resC = think2.detect(C)
@@ -126,7 +127,7 @@ while(True):
 				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
-					index[i][1]=think.detect(cropimg[i])
+					index[i][1]=think2.detect(cropimg[i])
 				break
 			else:
 				print("Look Down")
@@ -144,7 +145,7 @@ while(True):
 				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
-					index[i][1]=think.detect(cropimg[i])
+					index[i][1]=think2.detect(cropimg[i])
 				break
 			else:
 				print("Look Down")
@@ -162,7 +163,7 @@ while(True):
 				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
-					index[i][1]=think.detect(cropimg[i])
+					index[i][1]=think2.detect(cropimg[i])
 				break
 			else:
 				print("Look Up")
@@ -180,7 +181,7 @@ while(True):
 				cropimg[5]=img[box6[0][1]:box6[1][1], box6[0][0]:box6[1][0]]
 				for i in range (6):
 					index[i][0]=cropimg[i]
-					index[i][1]=think.detect(cropimg[i])
+					index[i][1]=think2.detect(cropimg[i])
 				break
 			else:
 				print("Look Up")
@@ -190,9 +191,13 @@ while(True):
 		print("Shelf not in vicinity! Look around!")
 
 print index
+for i in range(6):
+	print "Cell ",i+1
+	print index[i][1]
 cv2.destroyAllWindows()
 cap.release()
 while(True):
+	time.sleep(0.125)
 	que=raw_input("What do you want to do? Track yellow/green/red? exit?")
 	if(que == "yellow"):
 		for i in range (6):

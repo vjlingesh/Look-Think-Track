@@ -77,15 +77,18 @@ class Brain(object):
 	def testImg1(self,org_img):
 		img=cv2.cvtColor(org_img,cv2.COLOR_BGR2GRAY)
 		thresh=cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
-		Humom=cv2.HuMoments(cv2.moments(thresh)).flatten()
-		#print(Humom)
+		blur = cv2.bilateralFilter(thresh,15,80,80)
+		Humom=cv2.HuMoments(cv2.moments(blur)).flatten()
 		return Humom
 
 	def testImg2(self,org_img):
-		means = cv2.mean(org_img)
-		means = means[:3]
-		#print(means)
-		return means
+		gray2=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+		thresh=cv2.adaptiveThreshold(gray2,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
+		blur = cv2.bilateralFilter(thresh,15,80,80)
+		gray_lap = cv2.Laplacian(blur,cv2.CV_16S,ksize = 3,scale = 1,delta = 0)
+		dst = cv2.convertScaleAbs(gray_lap)
+		Humom2=cv2.HuMoments(cv2.moments(dst)).flatten()
+		return Humom2
 
 	def testImg3(self,org_img):
 		(means2, stds) = cv2.meanStdDev(org_img)
@@ -109,7 +112,7 @@ class Brain(object):
 
 	def detect(self,img):
 		filename1='HuMoments.csv'
-		filename2='RGB.csv'
+		filename2='ContourHu.csv'
 		filename3='MeanStdDev.csv'
 		dataset1=self.loadCsv(filename1)
 		dataset2=self.loadCsv(filename2)

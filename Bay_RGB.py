@@ -75,10 +75,9 @@ class Brain2(object):
 #Extracting moments of input test image
 
 	def testImg2(self,org_img):
-		means = cv2.mean(org_img)
-		means = means[:3]
-		#print(means)
-		return means
+		(means2, stds) = cv2.meanStdDev(org_img)
+		stats = np.concatenate([means2, stds]).flatten()
+		return stats
 
 
 #To predict to which class the input image belongs to
@@ -97,7 +96,7 @@ class Brain2(object):
 
 	def detect(self,img):
 		#filename1='HuMoments.csv'
-		filename2='RGB.csv'
+		filename2='MeanStdDev.csv'
 		#filename3='MeanStdDev.csv'
 		#dataset1=self.loadCsv(filename1)
 		dataset2=self.loadCsv(filename2)

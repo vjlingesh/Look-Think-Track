@@ -14,8 +14,8 @@ while(True): #Grid
         y=img.shape[0]
         cv2.rectangle(img,((int(x*0.2)),int(y*0.00)),((int(x*0.8)),int(y*0.99)),(0,0,255))
         cv2.imshow("Shelf training",img)
-        if(cv2.waitKey(50) & 0xFF == ord('n')):
-		break
+        if cv2.waitKey(50) == ord('n'):
+        	break
 i=0
 
 while(True): #Shelf training
@@ -28,13 +28,13 @@ while(True): #Shelf training
         train.ext(crop,0)
 	i=i+1
 	print i
-	if(cv2.waitKey(50) & 0xFF == ord('n')):
+	if cv2.waitKey(50)== ord('n'):
 		break
 i=0
 while(True): #Interval
 	f,img=cap.read()
         cv2.imshow("Shelf training",img)
-	if(cv2.waitKey(50) & 0xFF == ord('n')):
+	if cv2.waitKey(50) == ord('n'):
 		break
 i=0
 while(True): #Non shelf training
@@ -43,7 +43,7 @@ while(True): #Non shelf training
         train.ext(img,1)
 	i=i+1
 	print i
-	if(cv2.waitKey(50) & 0xFF == ord('n')):
+	if cv2.waitKey(50) == ord('n'):
 		break
 i=0
 while(True): #Grid
@@ -52,7 +52,7 @@ while(True): #Grid
         y=img.shape[0]
         cv2.rectangle(img,((int(x*0.35)),int(y*0.33)),((int(x*0.65)),int(y*0.66)),(255,255,0))
         cv2.imshow("Shelf training",img)
-        if(cv2.waitKey(50) & 0xFF == ord('n')):
+        if cv2.waitKey(50) == ord('n'):
 		break
 
 i=0

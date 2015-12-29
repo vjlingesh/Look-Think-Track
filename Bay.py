@@ -82,7 +82,7 @@ class Brain(object):
 		return Humom
 
 	def testImg2(self,org_img):
-		gray2=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+		gray2=cv2.cvtColor(org_img,cv2.COLOR_BGR2GRAY)
 		thresh=cv2.adaptiveThreshold(gray2,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
 		blur = cv2.bilateralFilter(thresh,15,80,80)
 		gray_lap = cv2.Laplacian(blur,cv2.CV_16S,ksize = 3,scale = 1,delta = 0)
@@ -129,8 +129,14 @@ class Brain(object):
 		result[1] = self.predict(summary2 , inputvector2)
 		result[2] = self.predict(summary3 , inputvector3)
 		prediction = Counter(result)
-		print prediction.most_common(1)[0][0]
-		return prediction.most_common(1)[0][0]
+		print result
+		value = prediction.most_common(1)[0][1]
+		if (value > 1):
+			print prediction.most_common(1)[0][0]
+			return prediction.most_common(1)[0][0]
+		else:
+			print 1.0
+			return 1.0
 			
 			
 
